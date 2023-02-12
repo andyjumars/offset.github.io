@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>求出當前元素頁面偏移量</title>
+</head>
+<style type="text/css">
+	
+	#grandfather{
+				border: 5px solid red;
+				padding: 30px;
+				position: absolute;
+			}
+			#father{
+				padding: 20px;
+				border: 1px solid #000;
+				position: relative;
+			}
+			#son{
+				width: 100px;
+				height: 100px;
+				margin: 10px;
+				background-color: red;
+			}
+
+</style>
+<body>
+	<div id="code"></div>
+	<div id="grandfather">
+			<div id="father">
+				<div id="son"></div>
+			</div>
+		</div>
+
+	<script type="text/javascript">
+			var son = document.getElementById('son');
+			console.log(getElementLeft(son));
+			console.log(getElementTop(son))
+
+			function getElementLeft(obj){
+
+				//獲取當前元素的左偏移量
+				var actualLeft = obj.offsetLeft;
+				//求出定位父級
+				var parent = obj.offsetParent;
+				//循環
+				while (parent != null) {
+					//求出當前左方偏移量
+					actualLeft = actualLeft + parent.clientLeft +parent.offsetLeft;
+					//更新定位父級
+					parent = parent.offsetParent;
+				}
+				return actualLeft + 'px';
+			}
+
+			function getElementTop(obj) {
+				
+				var actualTop = obj.offsetTop;
+
+				var parent = obj.offsetParent;
+
+				while(parent != null){
+
+					actualTop = actualTop + parent.clientTop + parent.offsetTop;
+
+					parent = parent.offsetParent;
+				}
+				return actualTop + 'px';
+			}
+
+	</script>
+
+</body>
+</html>
